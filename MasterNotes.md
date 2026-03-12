@@ -14,5 +14,6 @@
 - ran FastQC on raw data, got output files in mam840/fastqc_6/fastqc_out
 - `fastqc -o fastqc_out raw/SRR6996008.sr
 a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
+- downloaded HTML files from HPC onto local system
 ### FOURTH: Trimmomatic 
 ### FIFTH: FastQC of trimmed
