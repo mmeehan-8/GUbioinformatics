@@ -5,7 +5,8 @@ FIRST: dowload reads and trim using trimmomatic
 >this created a directory called SRR6996008
 >we used fasterq-dump *.sra & gzip *.fastq to convert the files to fastqc
 >we are making a directory within fastqc_6 labeled raw and moving the raw fastqc into this directory
->cp SRR6996008.sra_*.fastq.gz ../raw/
+>cp SRR6996008.sra_*.fastq.gz ../raw/ #moved fastqc reads into raw
+>gsutil cp -r raw gs://gu-biology-dept-class/mmw162/mmw162 the directory raw was copied to the bucket 
 SECOND: Organize
 THIRD: FastQC of raw
 FOURTH: Trimmomatic 
