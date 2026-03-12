@@ -11,5 +11,8 @@ SECOND: Organize
 - `gsutil mv gs://gu-biology-dept-class/mmw162/mmw162/SRR6996008.sra_1.fastq.gz gs://gu-biology-dept-class/mmw162/raw/`
 - `gsutil mv gs://gu-biology-dept-class/mmw162/mmw162/SRR6996008.sra_2.fastq.gz gs://gu-biology-dept-class/mmw162/raw/` #moved fastqc files to a directory called raw under gs://gu-biology-dept-class/mmw162/raw
 THIRD: FastQC of raw
+- ran FastQC on raw data, got output files in mam840/fastqc_6/fastqc_out
+- `fastqc -o fastqc_out raw/SRR6996008.sr
+a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 FOURTH: Trimmomatic 
 FIFTH: FastQC of trimmed
