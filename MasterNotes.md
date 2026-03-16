@@ -8,8 +8,9 @@
 - `cp SRR6996008.sra_*.fastq.gz ../raw/` #moved fastqc reads into raw
 - `gsutil cp -r raw gs://gu-biology-dept-class/mmw162/mmw162` #files in directory raw were copied to the bucket
 ### SECOND: Organize
-- `gsutil mv gs://gu-biology-dept-class/mmw162/mmw162/SRR6996008.sra_1.fastq.gz gs://gu-biology-dept-class/mmw162/raw/`
-- `gsutil mv gs://gu-biology-dept-class/mmw162/mmw162/SRR6996008.sra_2.fastq.gz gs://gu-biology-dept-class/mmw162/raw/` #moved fastqc files to a directory called raw under gs://gu-biology-dept-class/mmw162/raw
+- `gsutil mv gs://gu-biology-dept-class/mmw162/mmw162/SRR6996008.sra_1.fastq.gz gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/raw/`
+- `gsutil mv gs://gu-biology-dept-class/mmw162/mmw162/SRR6996008.sra_2.fastq.gz gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/raw/` #moved fastqc files to a directory called raw under gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/raw/
+- There is a folder under gu-biology-dept-class/mmw162/ labeled Bioinformatics_Project with a subfolder raw
 ### THIRD: FastQC of raw
 - ran FastQC on raw data, got output files in mam840/fastqc_6/fastqc_out
 - `fastqc -o fastqc_out raw/SRR6996008.sr
