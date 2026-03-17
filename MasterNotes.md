@@ -21,35 +21,35 @@ a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
   - minimum length of 50 base pairs, and sliding window of four with average score of 20
 
 `#!/bin/bash
-#SBATCH --job-name="sample6.A"
-#SBATCH --output="%x.o%j"
-#SBATCH --mail-type=END,FAIL --mail-user=mam840@georgetown.edu
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --time=03:00:00
-#SBATCH --mem=10G
+- #SBATCH --job-name="sample6.A"
+- #SBATCH --output="%x.o%j"
+- #SBATCH --mail-type=END,FAIL --mail-user=mam840@georgetown.edu
+- #SBATCH --nodes=1
+- #SBATCH --ntasks=1
+- #SBATCH --cpus-per-task=4
+- #SBATCH --time=03:00:00
+- #SBATCH --mem=10G
 
 #load trimmomatic module ("aliases" needed for GU HPC setup here)
-shopt -s expand_aliases
-module load trimmomatic
+- shopt -s expand_aliases
+- module load trimmomatic
 
 #define paths and variables
-R1=/home/mam840/fastqc_6/raw/SRR6996008.sra_1.fastq.gz
-R2=/home/mam840/fastqc_6/raw/SRR6996008.sra_2.fastq.gz
+- R1=/home/mam840/fastqc_6/raw/SRR6996008.sra_1.fastq.gz
+- R2=/home/mam840/fastqc_6/raw/SRR6996008.sra_2.fastq.gz
 
-adapters=/home/mam840/HW4_input_files/TruSeq3-PE.fa
-OUTDIR=/home/mam840/fastqc_6/cleanedreads
-mkdir -p $OUTDIR
+- adapters=/home/mam840/HW4_input_files/TruSeq3-PE.fa
+- OUTDIR=/home/mam840/fastqc_6/cleanedreads
+- mkdir -p $OUTDIR
 
 trimmomatic PE -threads $SLURM_CPUS_PER_TASK \
-        $R1 $R2 \
-        $OUTDIR/SRR6996008.sra_1.paired.fq.gz   $OUTDIR/SRR6996008.sra_1.unpaired.fq.gz \
-        $OUTDIR/SRR6996008.sra_2.paired.fq.gz   $OUTDIR/SRR6996008.sra_2.unpaired.fq.gz \
-        ILLUMINACLIP:/home/mam840/HW4_input_files/TruSeq3-PE.fa:2:30:10 \
-        SLIDINGWINDOW:4:20 MINLEN:50`
+  -      $R1 $R2 \
+  -      $OUTDIR/SRR6996008.sra_1.paired.fq.gz   $OUTDIR/SRR6996008.sra_1.unpaired.fq.gz \
+  -      $OUTDIR/SRR6996008.sra_2.paired.fq.gz   $OUTDIR/SRR6996008.sra_2.unpaired.fq.gz \
+  -      ILLUMINACLIP:/home/mam840/HW4_input_files/TruSeq3-PE.fa:2:30:10 \
+  -      SLIDINGWINDOW:4:20 MINLEN:50`
 
-        `sbatch slurm/sample6.trim1.sbatch.save`
+  -      `sbatch slurm/sample6.trim1.sbatch.save`
 
 
 ### FIFTH: FastQC of trimmed
