@@ -133,7 +133,7 @@ a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 
 `# Output directory (give it a name, it will be created by MEGAHIT)`
 
-`OUTDIR=/home/mam840/fastqc_6/megahit/megahit_out_B`
+`OUTDIR=/home/mam840/fastqc_6/megahit/megahit_out_C`
 
 `# ==== Run MEGAHIT ====`
 
@@ -153,6 +153,31 @@ a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 
 ` sbatch slurm/megahit.1.test`
 
-#### how many contigs were assembled 
-#### lines start with ">"
+### Find your Results (Step 4)
+#### How many contigs were assembled?
+`grep -c ">" final.contigs.fa`
+
+18160 contigs were assembled
+
+`head final.contigs.fa`
+
+The contigs look normal
+
+### Checking Quality with SeqKit (Step 5)
+
+ ` module load mamba/` 
+ ###### did this in megahit_out_C directory
+
+` $ mamba activate megahit-env`      
+
+` $ mamba install -c bioconda seqkit` 
+
+ `$ seqkit stats -a final.contigs.fa`
+
+###### → Write/paste into your notes! 
+
+
+→ What does it mean?
+
+
 
