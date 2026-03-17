@@ -84,3 +84,75 @@ a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 .html . `
 - after trimming, the per sequence base quality falls in the green and yellow, whereas the per sequece base quality dipped into the red before trimming
 
+## Workflow 3/17:
+### Running Megahit (Steps 1-3):
+
+##### slurm script:
+`#!/bin/bash`
+
+`#SBATCH --job-name=megahit_SRR6996008.sra`
+
+`#SBATCH --nodes=1`
+
+`#SBATCH --cpus-per-task=8`
+
+`#SBATCH --mem=32G`
+
+`#SBATCH --time=03:00:00`
+
+`#SBATCH --output=/home/mam840/fastqc_6/logs/megahit.1.test.%j.out`
+
+`#SBATCH --error=/home/mam840/fastqc_6/logs/megahit.1.test.%j.out`
+
+`#SBATCH --mail-type=END,FAIL --mail-user=mam840@georgetown.edu`
+
+`#note %j = job ID`
+
+`# ==== Load mamba/conda module (students: no need to change) ====`
+
+`module load mamba` 
+
+`source $(mamba info --base)/etc/profile.d/conda.sh`
+
+
+`# Activate the environment where you had MEGAHIT installed`
+
+`conda activate megahit-env`
+
+`# ==== Set paths and filenames (students: edit this block!) ====`
+
+`# Directory where the cleaned reads live`
+
+`READDIR=/home/mam840/fastqc_6/cleanedreads/`
+
+`# Input read files (paired-end)`
+
+`READ1=${READDIR}/SRR6996008.sra_1.paired.fq.gz`
+
+`READ2=${READDIR}/SRR6996008.sra_2.paired.fq.gz`
+
+`# Output directory (give it a name, it will be created by MEGAHIT)`
+
+`OUTDIR=/home/mam840/fastqc_6/megahit/megahit_out_B`
+
+`# ==== Run MEGAHIT ====`
+
+`megahit \`
+
+  `-1 ${READ1} \`
+  
+  `-2 ${READ2} \`
+  
+  `-t ${SLURM_CPUS_PER_TASK} \`
+  
+ ` -o ${OUTDIR}`
+
+ `echo "Done. Contigs should be in: ${OUTDIR}/final.contigs.fa"`
+ 
+`#### called slurm script:`
+
+` sbatch slurm/megahit.1.test`
+
+#### how many contigs were assembled 
+#### lines start with ">"
+
