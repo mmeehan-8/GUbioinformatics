@@ -176,6 +176,9 @@ The contigs look normal
 
 ###### → Write/paste into your notes! 
 
+file              format  type  num_seqs    sum_len  min_len  avg_len  max_len   Q1   Q2   Q3  sum_gap  N50  N50_num  Q20(%)  Q30(%)  AvgQual  GC(%)  sum_n
+
+final.contigs.fa  FASTA   DNA     18,160  8,380,542      224    461.5  129,695  335  396  483        0  443      852       0       0        0  47.39      0
 
 → What does it mean?
 
