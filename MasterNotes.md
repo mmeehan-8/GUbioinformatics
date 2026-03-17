@@ -17,18 +17,18 @@
 a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 - downloaded HTML files from HPC onto local system
 ### FOURTH: Trimmomatic 
-- ran trimmomatic with paramaters as stated:
-  - minimum length of 50 base pairs, and sliding window of four with average score of 20
-`
-#!/bin/bash
-- #SBATCH --job-name="sample6.A"
-- #SBATCH --output="%x.o%j"
-- #SBATCH --mail-type=END,FAIL --mail-user=mam840@georgetown.edu
-- #SBATCH --nodes=1
-- #SBATCH --ntasks=1
-- #SBATCH --cpus-per-task=4
-- #SBATCH --time=03:00:00
-- #SBATCH --mem=10G
+# ran trimmomatic with paramaters as stated:
+- minimum length of 50 base pairs, and sliding window of four with average score of 20
+# trimmomatic script 
+` #!/bin/bash
+  #SBATCH --job-name="sample6.A"
+  #SBATCH --output="%x.o%j"
+ #SBATCH --mail-type=END,FAIL --mail-user=mam840@georgetown.edu
+ #SBATCH --nodes=1
+ #SBATCH --ntasks=1
+ #SBATCH --cpus-per-task=4
+ #SBATCH --time=03:00:00
+ #SBATCH --mem=10G`
 
 #load trimmomatic module ("aliases" needed for GU HPC setup here)
 - shopt -s expand_aliases
