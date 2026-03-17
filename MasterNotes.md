@@ -180,7 +180,9 @@ file              format  type  num_seqs    sum_len  min_len  avg_len  max_len  
 
 final.contigs.fa  FASTA   DNA     18,160  8,380,542      224    461.5  129,695  335  396  483        0  443      852       0       0        0  47.39      0
 
-→ What does it mean?
+###### → What does it mean?
+
+This is a FASTA file with are 18160 sequences with an average length of 461.5
 
 
 
