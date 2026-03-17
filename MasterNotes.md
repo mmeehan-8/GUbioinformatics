@@ -1,5 +1,5 @@
-# GUbioinformatics
-## Goal for 3/12:
+# GUbioinformatics Project: Molly & Maddie
+## Workflow 3/12:
 ### FIRST: dowload reads and trim using trimmomatic
 - we have both downloaded ascension number SAMN08784163 into directories labeled fastqc_6 on our respective local directories
 - this created a directory called SRR6996008
@@ -17,45 +17,69 @@
 a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 - downloaded HTML files from HPC onto local system
 ### FOURTH: Trimmomatic 
-# ran trimmomatic with paramaters as stated:
+
+#### ran trimmomatic with paramaters as stated:
 - minimum length of 50 base pairs, and sliding window of four with average score of 20
-# trimmomatic script 
-` #!/bin/bash
-  #SBATCH --job-name="sample6.A"
-  #SBATCH --output="%x.o%j"
- #SBATCH --mail-type=END,FAIL --mail-user=mam840@georgetown.edu
- #SBATCH --nodes=1
- #SBATCH --ntasks=1
- #SBATCH --cpus-per-task=4
- #SBATCH --time=03:00:00
- #SBATCH --mem=10G`
+#### trimmomatic script 
+` #!/bin/bash`
 
-#load trimmomatic module ("aliases" needed for GU HPC setup here)
-- shopt -s expand_aliases
-- module load trimmomatic
+ `#SBATCH --job-name="sample6.A"`
+ 
+` #SBATCH --output="%x.o%j"`
 
-#define paths and variables
-- R1=/home/mam840/fastqc_6/raw/SRR6996008.sra_1.fastq.gz
-- R2=/home/mam840/fastqc_6/raw/SRR6996008.sra_2.fastq.gz
+ `#SBATCH --mail-type=END,FAIL --mail-user=mam840@georgetown.edu`
+ 
+` #SBATCH --nodes=1`
 
-- adapters=/home/mam840/HW4_input_files/TruSeq3-PE.fa
-- OUTDIR=/home/mam840/fastqc_6/cleanedreads
-- mkdir -p $OUTDIR
+ `#SBATCH --ntasks=1`
+ 
+ `#SBATCH --cpus-per-task=4`
+ 
+ `#SBATCH --time=03:00:00`
+ 
+ `#SBATCH --mem=10G`
 
-trimmomatic PE -threads $SLURM_CPUS_PER_TASK \
-  -      $R1 $R2 \
-  -      $OUTDIR/SRR6996008.sra_1.paired.fq.gz   $OUTDIR/SRR6996008.sra_1.unpaired.fq.gz \
-  -      $OUTDIR/SRR6996008.sra_2.paired.fq.gz   $OUTDIR/SRR6996008.sra_2.unpaired.fq.gz \
-  -      ILLUMINACLIP:/home/mam840/HW4_input_files/TruSeq3-PE.fa:2:30:10 \
-  -      SLIDINGWINDOW:4:20 MINLEN:50
-`
-- ran trimmomatic:  `sbatch slurm/sample6.trim1.sbatch.save`
+#### load trimmomatic module ("aliases" needed for GU HPC setup here)
+
+`shopt -s expand_aliases`
+
+`module load trimmomatic`
+
+#### define paths and variables 
+`R1=/home/mam840/fastqc_6/raw/SRR6996008.sra_1.fastq.gz`
+
+` R2=/home/mam840/fastqc_6/raw/SRR6996008.sra_2.fastq.gz`
+
+`adapters=/home/mam840/HW4_input_files/TruSeq3-PE.fa`
+
+#### define output directory (on Molly's local computer)
+
+`OUTDIR=/home/mam840/fastqc_6/cleanedreads`
+
+`mkdir -p $OUTDIR`
+
+`trimmomatic PE -threads $SLURM_CPUS_PER_TASK \`
+   `$R1 $R2 \`
+   
+  `$OUTDIR/SRR6996008.sra_1.paired.fq.gz   $OUTDIR/SRR6996008.sra_1.unpaired.fq.gz \ `
+  
+  `$OUTDIR/SRR6996008.sra_2.paired.fq.gz   $OUTDIR/SRR6996008.sra_2.unpaired.fq.gz \`
+  
+ ` ILLUMINACLIP:/home/mam840/HW4_input_files/TruSeq3-PE.fa:2:30:10 \`
+ ` SLIDINGWINDOW:4:20 MINLEN:50` 
+ 
+#### ran trimmomatic:  
+
+`sbatch slurm/sample6.trim1.sbatch.save`
 
 
 ### FIFTH: FastQC of trimmed
 - ran FastQC on trimmed data reads, both forward and reverse paired reads
-- `fastqc -o fastqc_out cleanedreads/SRR6996008.sra_1.paired.fq.gz cleanedreads/SRR6996008.sra_2.paired.fq.gz`
+
+`fastqc -o fastqc_out cleanedreads/SRR6996008.sra_1.paired.fq.gz cleanedreads/SRR6996008.sra_2.paired.fq.gz`
+
 - the html files were downloaded onto Molly's local system
-- `gcloud compute scp mam840@m12-controller:/home/mam840/fastqc_6/fastqc_out/SRR6996008.sra_2.paired_fastqc
+
+`gcloud compute scp mam840@m12-controller:/home/mam840/fastqc_6/fastqc_out/SRR6996008.sra_2.paired_fastqc
 .html . `
 
