@@ -82,4 +82,5 @@ a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 
 `gcloud compute scp mam840@m12-controller:/home/mam840/fastqc_6/fastqc_out/SRR6996008.sra_2.paired_fastqc
 .html . `
+- after trimming, the per sequence base quality falls in the green and yellow, whereas the per sequece base quality dipped into the red before trimming
 
