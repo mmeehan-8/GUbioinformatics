@@ -82,7 +82,7 @@ a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 
 `gcloud compute scp mam840@m12-controller:/home/mam840/fastqc_6/fastqc_out/SRR6996008.sra_2.paired_fastqc
 .html . `
-- after trimming, the per sequence base quality falls in the green and yellow, whereas the per sequece base quality dipped into the red before trimming
+- after trimming, the per sequence base quality falls in the green and yellow, whereas the per sequece base quality dipped into the red before trimming **(add more notes to this)**
 
 ## Workflow 3/17:
 ### Running Megahit (Steps 1-3):
@@ -184,5 +184,14 @@ final.contigs.fa  FASTA   DNA     18,160  8,380,542      224    461.5  129,695  
 
 This is a FASTA file with are 18160 sequences with an average length of 461.5
 
+## Workflow 3/19
+### Virsorter:
+
+#### FIRST: getting organized:
+made new folder labeled virsorter and new folder labeled votus on the Bucket
+
+`gsutil cp gs://gu-biology-dept- class/mmw162/Bioinformatics_Project/megahit/final.contigs.fa .`
+
+downloaded final.contigs.fa to megahit folder
 
 
