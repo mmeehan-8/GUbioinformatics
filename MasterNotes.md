@@ -207,6 +207,9 @@ installed virsorter and downloaded databases
 
 `$ virsorter setup -d db -j 4`
 
+#### Run virsorter with Slurm script 
+
+`sbatch mmw162/scripts/virsorter_6`
 
 
 
