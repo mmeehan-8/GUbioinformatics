@@ -194,4 +194,21 @@ made new folder labeled virsorter and new folder labeled votus on the Bucket
 
 downloaded final.contigs.fa to megahit folder
 
+#### Install virsorter and databases
+installed virsorter and downloaded databases
+
+`$ module load mamba`
+
+`$ mamba create -y -n vs2-env -c conda-forge -c bioconda virsorter`
+
+`$ mamba activate vs2-env`
+
+`$ rm -rf db`
+
+`$ virsorter setup -d db -j 4`
+
+
+
+
+
 
