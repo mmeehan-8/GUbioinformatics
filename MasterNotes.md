@@ -205,13 +205,131 @@ installed virsorter and downloaded databases
 
 `$ rm -rf db`
 
-`$ virsorter setup -d db -j 4`
+`$ virsorter setup -d db -j 4 --conda-frontend conda`
 
 #### Run virsorter with Slurm script 
 
 `sbatch mmw162/scripts/virsorter_6`
 
+`#!/bin/bash`
+
+`#SBATCH --job-name=virsorter_6`
+
+`#SBATCH --nodes=1`
+
+`#SBATCH --cpus-per-task=8`
+
+`#SBATCH --mem=20G`
+
+`#SBATCH --time=03:00:00`    
+
+`#SBATCH --mail-type=END,FAIL`
+
+`#SBATCH --mail-user=mmw162@georgetown.edu`
+
+`#SBATCH --output=/home/mmw162/Bioinformatics_Project/virsorter/job_%j.out`
+
+`#SBATCH --error=/home/mmw162/Bioinformatics_Project/virsorter/job_%j.err`
+
+`# ==== Load mamba (students: no need to change) ====`
+
+`module load mamba`
+
+`source $(mamba info --base)/etc/profile.d/conda.sh`
+
+`# Activate the environment where you had VirSorter2 installed`
+
+`mamba activate vs2-env`
+
+`# ==== Set paths and filenames (students: edit this block!) ====`
+
+`#set up directories`
+
+`INDIR=/home/mmw162/Bioinformatics_Project/megahit/final.contigs.fa #directory where input will$`
+
+`OUTROOT=/home/mmw162/Bioinformatics_Project/virsorter    #directory output will go` 
+
+`mkdir -p "${OUTROOT}"                                    #new directory to be created for outp$`
+
+`SAMPLE_ID=6                                              #just the basic sample name (sample2 $`
+
+`INPUT="${INDIR}"                        #contig file name/location`
+
+`OUTDIR="${OUTROOT}/vs2-${SAMPLE_ID}"                     #where you’ll find the outputs`
+
+`mkdir -p "${OUTDIR}"`
 
 
+`# ==== Run virsorter2 with >5kb cutoff and DNA virus categories first`
+
+`echo "Running VirSorter2 on ${INPUT}"`
+
+`virsorter run \`
+
+ ` -w "${OUTDIR}" \`
+ 
+ ` -i "${INPUT}" \`
+ 
+ `--keep-original-seq \`
+ 
+ ` --include-groups dsDNAphage,NCLDV,ssDNA \`
+ 
+  `--min-length 5000`
+
+`echo "Done."`
+
+#### find results
+
+in directory under virsorter: vs2-6 
+
+final-viral-boundary.tsv 
+
+final-viral-score.tsv      
+` 
+final-viral-combined.fa    
+
+#### count number of contigs 
+`grep -c ">" final-viral-combined.fa`
+
+10
+
+` seqkit seq -m 5000 final-viral-combined.fa | grep -c ">"
+[WARN] you may switch on flag -g/--remove-gaps to remove spaces` 
+
+10
+
+#### make new file 
+` seqkit seq -m 5000 final-viral-combined.fa > final-viral-combined_min5kb.fa`
+
+#### copy file to bucket
+
+`gsutil cp /home/mmw162/Bioinformatics_Project/virsorter/vs2-6/final-viral-combined.fa gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/Virsorter`
+
+`gsutil cp /home/mmw162/Bioinformatics_Project/virsorter/vs2-6/final-viral-combined_min5kb.fa gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/Virsorter`
+
+#### SECOND: Clustering
+
+##### Install Clustering
+Install vclust 
+Install by creating an environment, installing virsorter 
+`module load mamba`
+
+`mamba create -n votu-env -c bioconda -c conda-forge vclust`
+
+` mamba activate votu-env`
+
+`vclust prefilter -i final-viral-combined_min5kb.fa -o fltr.txt`
+
+`vclust align -i final-viral-combined_min5kb.fa -o ani.tsv --filter fltr.txt`
+
+
+`vclust cluster -i ani.tsv -o clusters.tsv --ids ani.ids.tsv --metric ani --ani 0.95 --out-repr`
+
+put votus in new file 
+` seqkit grep -f votu_seeds.txt final-viral-combined_min5kb.fa > votus_final.fna` 
+
+#### copy file to bucket
+
+'gsutil cp /home/mmw162/Bioinformatics_Project/virsorter/vs2-6/votus_final.fa gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/Votus'
 
 
