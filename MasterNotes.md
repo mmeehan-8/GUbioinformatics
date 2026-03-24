@@ -332,4 +332,81 @@ put votus in new file
 
 'gsutil cp /home/mmw162/Bioinformatics_Project/virsorter/vs2-6/votus_final.fa gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/Votus'
 
+## workflow 3/24
+
+### download checkv database
+
+`module load checkv`
+`checkv download_database ./	`
+
+### run checkv
+
+- running checkv with a slurm script to check the quality of contigs
+- set up checkv directory
+- run checkv with slurm script:
+
+`#!/bin/bash`
+
+`#SBATCH --job-name=checkv`
+
+`#SBATCH --output=/home/mmw162/Bioinformatics_Project/checkv-%j.out`
+
+`#SBATCH --error=/home/mmw162/Bioinformatics_Project/checkv-%j.err`
+
+`#SBATCH --time=03:00:00`
+
+`#SBATCH --nodes=1`
+
+`#SBATCH --ntasks=1`
+
+`#SBATCH --cpus-per-task=16`
+
+`#SBATCH --mem=16G`
+
+`#SBATCH --mail-type=END,FAIL`
+
+`#SBATCH --mail-user=mmw162@georgetown.edu`
+
+
+`# ==== Load checkv program module (students: no need to change) ====`
+
+`module load checkv`
+
+
+`# ==== Set variables, paths, and filenames (students: edit this block!) ====`
+
+`CHECKVDB="/home/mmw162/Bioinformatics_Project/checkv/checkv-db-v1.5"`
+
+`SAMPLE_ID="vOTUs"`
+
+`INPUT="/home/mmw162/Bioinformatics_Project/virsorter/vs2-6/votus_final.fna"`
+
+`OUTDIR="/home/mmw162/Bioinformatics_Project/checkv/${SAMPLE_ID}"`
+
+`mkdir -p "${OUTDIR}"`
+
+
+`# ==== run checkv (students: no need to change. The second line is the command) ====`
+
+`echo "Running CheckV on ${INPUT}"`
+
+`checkv end_to_end "${INPUT}" "${OUTDIR}" -d "${CHECKVDB}" -t ${SLURM_CPUS_PER_TASK}`
+
+`echo "Done."`
+
+### checkv data 
+- 2 complete contigs
+- 1 high quality contig
+- 7 low quality contigs
+
+- longest contig: 129695
+
+### bowtie2
+- put votu files into bowtie2 files
+- load bowtie2
+  `module load bowtie2`
+  `bowtie2-build votus_10kb_6samples.fna votu_index`
+- write slurm script for bowtie2
+- upload bowtie outputs to bucket
+  `gcloud storage cp [file] gs://gu-biology-dept-class/ClassProject/bam
 
