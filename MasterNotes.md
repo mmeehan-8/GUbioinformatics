@@ -394,6 +394,10 @@ put votus in new file
 
 `echo "Done."`
 
+sent data to bucket 
+
+`gcloud storage cp gs://gu-biology-dept-class/ClassProject/votus_10kb_6samples.fna to copy to mmw162/Bioinformatics_Project/checkv`
+
 ### checkv data 
 - 2 complete contigs
 - 1 high quality contig
@@ -407,6 +411,67 @@ put votus in new file
   `module load bowtie2`
   `bowtie2-build votus_10kb_6samples.fna votu_index`
 - write slurm script for bowtie2
+
+`#!/bin/bash`
+
+`#SBATCH --job name=bowtie2_vOTUs`
+
+`#SBATCH --output=/home/mmw162/Bioinformatics_Project/bowtie2/bowtie-%j.out`
+
+`#SBATCH --error=/home/mmw162/Bioinformatics_Project/bowtie2/bowtie-%j.err`
+
+`#SBATCH --mail-type=END,FAIL`
+
+`#SBATCH --mail-user=--mmw162@georgetown.edu`
+
+`#SBATCH --time=8:00:00`
+
+`#SBATCH --mem=16G`
+
+`# ---------SET UP----------`
+
+`SAMPLE= ”sample6_mmw162”   #whatever your sample # is!`
+
+`INDEX="home/mmw162/Bioinformatics_Project/bowtie2/votu_index"`
+
+`OUTPUTDIR="home/mmw162/Bioinformatics_Project/bowtie2/${SAMPLE}"`
+
+`# --------- LOAD MODULES ----------`
+
+`module purge`
+
+`module load bowtie2/2.5.4`
+
+`# --------- RUN BOWTIE2 AND PIPE TO SAMTOOLS ----------`
+
+`# First make output and log directories; move into OUTPUTDIR`
+
+`mkdir -p "${OUTPUTDIR}"`
+
+`cd "${OUTPUTDIR}"`
+
+`mkdir -p logs`
+
+`echo "Running bowtie2 on sample ${SAMPLE}"`
+
+`bowtie2 -p 8 -x "${INDEX}" -1 "/home/mmw162/Bioinformatics_Project/trimmed/SRR6996008.sra_1.paired.fq.gz" -2"/home/mmw162/Bioinformatics_Project/trimmed/SRR6996008.sra_2.paired.fq.gz" \`
+
+`| samtools view -bS - > "${SAMPLE}.bam"`
+
+`echo "Finished running bowtie2 and performing compression"`
+
+`#---------sort and index files`
+
+`echo "Sorting"`
+
+`samtools sort "${SAMPLE}.bam" > "${SAMPLE}_sorted.bam"`
+
+`echo "Indexing"`
+
+`samtools index "${SAMPLE}_sorted.bam"`
+
+`echo "Finished ${SAMPLE}"`
+ 
 - upload bowtie outputs to bucket
   `gcloud storage cp [file] gs://gu-biology-dept-class/ClassProject/bam
 
