@@ -475,3 +475,11 @@ sent data to bucket
 - upload bowtie outputs to bucket
   `gcloud storage cp [file] gs://gu-biology-dept-class/ClassProject/bam
 
+# Workflow 3/26:
+### Using R Studio to Make a Heatmap:
+
+<img width="2161" height="1258" alt="image" src="https://github.com/user-attachments/assets/51601628-38ba-4e71-9605-6a04d2fc6288" />
+
+### Using R to make richness plots
+<img width="1604" height="1258" alt="image" src="https://github.com/user-attachments/assets/6133b0cd-f7e9-47bc-90f8-fc7183dfc918" />
+<img width="1604" height="1258" alt="image" src="https://github.com/user-attachments/assets/4ad42cbe-e226-49ab-88aa-13140caaa527" />
