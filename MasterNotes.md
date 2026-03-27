@@ -82,7 +82,8 @@ a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 
 `gcloud compute scp mam840@m12-controller:/home/mam840/fastqc_6/fastqc_out/SRR6996008.sra_2.paired_fastqc
 .html . `
-- after trimming, the per sequence base quality falls in the green and yellow, whereas the per sequece base quality dipped into the red before trimming **(add more notes to this)**
+- Before trimming, the forward read per sequence base quality median red line and blue mean line fell into the yellow area. The error bars were quite large. The reverse read per sequence base quality mean and median lines fell into the red. The per sequence base quality is thus quite low. 
+- After trimming, the forward read per sequence base quality median and mean lines are solidly in green and the error bars have substantially decreased. The reverse read per sequence base quality has also improved. The mean and median lines are both in green and the error bars have substantially decreased. However, the reverse read quality is not as good as the forward read quality.
 
 ## Workflow 3/17:
 ### Running Megahit (Steps 1-3):
@@ -472,8 +473,38 @@ sent data to bucket
 
 `echo "Finished ${SAMPLE}"`
  
-- upload bowtie outputs to bucket
-  `gcloud storage cp [file] gs://gu-biology-dept-class/ClassProject/bam
+### upload bowtie outputs to bucket (sample6_mmw162_sorted.bam)
+#### slurm script to send to bucket 
+
+` #!/bin/bash`
+
+`#SBATCH --job-name="transfer"`
+
+`#SBATCH --output="%x.o%j"`
+
+`#SBATCH --nodes=1`
+
+`#SBATCH --ntasks=1`
+
+`#SBATCH --cpus-per-task=4`
+
+`#SBATCH --time=5-00`
+
+`#SBATCH --mem=10G`
+
+`#SBATCH --mail-type=END,FAIL`
+
+`#SBATCH --mail-user=mmw162@georgetown.edu`
+
+`# Load gsutil module`
+
+`module load google-cloud-sdk`
+
+ 
+`# For example, to transfer the file "Sample1_sorted.bam" under your home directory to the bucket, use this but just change/check the file name.`
+
+`gsutil cp "/home/mmw162/Bioinformatics_Project/bowtie2/sample6_mmw162/sample6_mmw162_sorted.bam" "gs://gu-biology-dept-class/ClassProject/bam/"`
+  
 
 # Workflow 3/26:
 ### Using R Studio to Make a Heatmap:
