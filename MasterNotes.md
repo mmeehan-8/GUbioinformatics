@@ -12,12 +12,13 @@
 - `gsutil mv gs://gu-biology-dept-class/mmw162/mmw162/SRR6996008.sra_2.fastq.gz gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/raw/` #moved fastqc files to a directory called raw under gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/raw/
 - There is a folder under gu-biology-dept-class/mmw162/ labeled Bioinformatics_Project with a subfolder raw
 ### THIRD: FastQC of raw
+- we ran FastQC to see the quality scores of the raw data, and to see exactly what we were working with in comparison to the trimmed data
 - ran FastQC on raw data, got output files in mam840/fastqc_6/fastqc_out
 - `fastqc -o fastqc_out raw/SRR6996008.sr
 a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 - downloaded HTML files from HPC onto local system
 ### FOURTH: Trimmomatic 
-
+- we used Trimmomatic to trim and clean up the raw reads, we want to remove any low quality reads as well as any reads that are too short
 #### ran trimmomatic with paramaters as stated:
 - minimum length of 50 base pairs, and sliding window of four with average score of 20
 #### trimmomatic script 
@@ -75,6 +76,7 @@ a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 
 ### FIFTH: FastQC of trimmed
 - ran FastQC on trimmed data reads, both forward and reverse paired reads
+- compared FastQC of trimmed and raw reads, to see if the quality of the reads and data has improved post trimming
 
 `fastqc -o fastqc_out cleanedreads/SRR6996008.sra_1.paired.fq.gz cleanedreads/SRR6996008.sra_2.paired.fq.gz`
 
@@ -87,7 +89,7 @@ a_1.fastq.gz raw/SRR6996008.sra_2.fastq.gz`
 
 ## Workflow 3/17:
 ### Running Megahit (Steps 1-3):
-
+- we used megahit to assemble the contigs, to put together sequences from our metagenomics data
 ##### slurm script:
 `#!/bin/bash`
 
@@ -187,7 +189,7 @@ This is a FASTA file with are 18160 sequences with an average length of 461.5
 
 ## Workflow 3/19
 ### Virsorter:
-
+- Virsorter can identify virus sequences and tell us how viruslike our contigs are by comparison with a large database
 #### FIRST: getting organized:
 made new folder labeled virsorter and new folder labeled votus on the Bucket
 
@@ -309,7 +311,7 @@ final-viral-combined.fa
 `gsutil cp /home/mmw162/Bioinformatics_Project/virsorter/vs2-6/final-viral-combined_min5kb.fa gs://gu-biology-dept-class/mmw162/Bioinformatics_Project/Virsorter`
 
 #### SECOND: Clustering
-
+- we used vclust to align and cluster the contigs by viral identity 
 ##### Install Clustering
 Install vclust 
 Install by creating an environment, installing virsorter 
@@ -342,7 +344,7 @@ put votus in new file
 
 ### run checkv
 
-- running checkv with a slurm script to check the quality of contigs
+- running checkv with a slurm script to check the quality of contigs, on completeness, contamination and identification
 - set up checkv directory
 - run checkv with slurm script:
 
@@ -407,6 +409,7 @@ sent data to bucket
 - longest contig: 129695
 
 ### bowtie2
+- bowtie2 can align the contigs to a reference genome
 - put votu files into bowtie2 files
 - load bowtie2
   `module load bowtie2`
